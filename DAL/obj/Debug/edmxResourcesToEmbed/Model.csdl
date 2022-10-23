@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="coronaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Members" Relationship="coronaModel.FK_User_City1" FromRole="City" ToRole="Member" />
+  </EntityType>
+  <EntityType Name="CoronaPatient">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MemberId" Type="Int32" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Member" Relationship="coronaModel.FK_Disease_User1" FromRole="CoronaPatient" ToRole="Member" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="VaccineManufacturers" Relationship="Self.FK_VaccineManufacturer_Country1" FromRole="Country" ToRole="VaccineManufacturer" />
+  </EntityType>
+  <EntityType Name="VaccineManufacturer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CountryId" Type="Int32" />
+    <NavigationProperty Name="Country" Relationship="Self.FK_VaccineManufacturer_Country1" FromRole="VaccineManufacturer" ToRole="Country" />
+    <NavigationProperty Name="Vaccinations" Relationship="coronaModel.FK_Vaccination_VaccineManufacturer1" FromRole="VaccineManufacturer" ToRole="Vaccination" />
+  </EntityType>
+  <Association Name="FK_VaccineManufacturer_Country1">
+    <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+    <End Role="VaccineManufacturer" Type="Self.VaccineManufacturer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="VaccineManufacturer">
+        <PropertyRef Name="CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="coronaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Cities" EntityType="Self.City" />
+    <EntitySet Name="CoronaPatients" EntityType="Self.CoronaPatient" />
+    <EntitySet Name="Countries" EntityType="Self.Country" />
+    <EntitySet Name="VaccineManufacturers" EntityType="Self.VaccineManufacturer" />
+    <AssociationSet Name="FK_VaccineManufacturer_Country1" Association="Self.FK_VaccineManufacturer_Country1">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="VaccineManufacturer" EntitySet="VaccineManufacturers" />
+    </AssociationSet>
+    <EntitySet Name="Vaccinations" EntityType="coronaModel.Vaccination" />
+    <AssociationSet Name="FK_Vaccination_VaccineManufacturer1" Association="coronaModel.FK_Vaccination_VaccineManufacturer1">
+      <End Role="VaccineManufacturer" EntitySet="VaccineManufacturers" />
+      <End Role="Vaccination" EntitySet="Vaccinations" />
+    </AssociationSet>
+    <EntitySet Name="Members" EntityType="coronaModel.Member" />
+    <AssociationSet Name="FK_User_City1" Association="coronaModel.FK_User_City1">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="Member" EntitySet="Members" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Disease_User1" Association="coronaModel.FK_Disease_User1">
+      <End Role="Member" EntitySet="Members" />
+      <End Role="CoronaPatient" EntitySet="CoronaPatients" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Vaccination_User1" Association="coronaModel.FK_Vaccination_User1">
+      <End Role="Member" EntitySet="Members" />
+      <End Role="Vaccination" EntitySet="Vaccinations" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Vaccination">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MemberId" Type="Int32" Nullable="false" />
+    <Property Name="VaccinationId" Type="Int32" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="NumVaccination" Type="Int32" />
+    <NavigationProperty Name="VaccineManufacturer" Relationship="coronaModel.FK_Vaccination_VaccineManufacturer1" FromRole="Vaccination" ToRole="VaccineManufacturer" />
+    <NavigationProperty Name="Member" Relationship="coronaModel.FK_Vaccination_User1" FromRole="Vaccination" ToRole="Member" />
+  </EntityType>
+  <Association Name="FK_Vaccination_VaccineManufacturer1">
+    <End Type="coronaModel.VaccineManufacturer" Role="VaccineManufacturer" Multiplicity="1" />
+    <End Type="coronaModel.Vaccination" Role="Vaccination" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VaccineManufacturer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Vaccination">
+        <PropertyRef Name="VaccinationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Member">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IdNumber" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="true" />
+    <Property Name="CityId" Type="Int32" Nullable="false" />
+    <Property Name="Street" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="HouseNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Phone" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="Telephone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="City" Relationship="coronaModel.FK_User_City1" FromRole="Member" ToRole="City" />
+    <NavigationProperty Name="CoronaPatients" Relationship="coronaModel.FK_Disease_User1" FromRole="Member" ToRole="CoronaPatient" />
+    <NavigationProperty Name="Vaccinations" Relationship="coronaModel.FK_Vaccination_User1" FromRole="Member" ToRole="Vaccination" />
+  </EntityType>
+  <Association Name="FK_User_City1">
+    <End Type="coronaModel.City" Role="City" Multiplicity="1" />
+    <End Type="coronaModel.Member" Role="Member" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Member">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Disease_User1">
+    <End Type="coronaModel.Member" Role="Member" Multiplicity="1" />
+    <End Type="coronaModel.CoronaPatient" Role="CoronaPatient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CoronaPatient">
+        <PropertyRef Name="MemberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Vaccination_User1">
+    <End Type="coronaModel.Member" Role="Member" Multiplicity="1" />
+    <End Type="coronaModel.Vaccination" Role="Vaccination" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Vaccination">
+        <PropertyRef Name="MemberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

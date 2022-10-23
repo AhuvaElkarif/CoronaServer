@@ -1,0 +1,392 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="discoverIsraelModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="category">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="attractions" Relationship="discoverIsraelModel.FK__attractio__Categ__34C8D9D1" FromRole="category" ToRole="attraction" />
+  </EntityType>
+  <EntityType Name="generalTime">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AttractionId" Type="Int32" Nullable="false" />
+    <Property Name="PeriodId" Type="Int32" Nullable="false" />
+    <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="EndTime" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="DayInWeek" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="period" Relationship="Self.generalTimeToPeriod" FromRole="generalTime" ToRole="period" />
+    <NavigationProperty Name="attraction" Relationship="discoverIsraelModel.generalTimeToAttraction" FromRole="generalTime" ToRole="attraction" />
+  </EntityType>
+  <EntityType Name="orderAttraction">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="OrderDate" Type="DateTime" Precision="0" />
+    <Property Name="GlobalPrice" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="productToOrders" Relationship="Self.productToOrderToOrder" FromRole="orderAttraction" ToRole="productToOrder" />
+    <NavigationProperty Name="user" Relationship="discoverIsraelModel.orderToUser" FromRole="orderAttraction" ToRole="user" />
+  </EntityType>
+  <EntityType Name="period">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Season" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+    <Property Name="FromDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="TillDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="generalTimes" Relationship="Self.generalTimeToPeriod" FromRole="period" ToRole="generalTime" />
+  </EntityType>
+  <EntityType Name="productToOrder">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderAttractionId" Type="Int32" />
+    <Property Name="AttractionId" Type="Int32" Nullable="false" />
+    <Property Name="Amount" Type="Int32" Nullable="false" />
+    <Property Name="FromHour" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="TillHour" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="Status" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="orderAttraction" Relationship="Self.productToOrderToOrder" FromRole="productToOrder" ToRole="orderAttraction" />
+    <NavigationProperty Name="attraction" Relationship="discoverIsraelModel.productToOrderToAttraction" FromRole="productToOrder" ToRole="attraction" />
+  </EntityType>
+  <Association Name="generalTimeToPeriod">
+    <End Role="period" Type="Self.period" Multiplicity="1" />
+    <End Role="generalTime" Type="Self.generalTime" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="period">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="generalTime">
+        <PropertyRef Name="PeriodId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="productToOrderToOrder">
+    <End Role="orderAttraction" Type="Self.orderAttraction" Multiplicity="0..1" />
+    <End Role="productToOrder" Type="Self.productToOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="orderAttraction">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="productToOrder">
+        <PropertyRef Name="OrderAttractionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="discoverIsraelEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="categories" EntityType="Self.category" />
+    <EntitySet Name="generalTimes" EntityType="Self.generalTime" />
+    <EntitySet Name="orderAttractions" EntityType="Self.orderAttraction" />
+    <EntitySet Name="periods" EntityType="Self.period" />
+    <EntitySet Name="productToOrders" EntityType="Self.productToOrder" />
+    <AssociationSet Name="generalTimeToPeriod" Association="Self.generalTimeToPeriod">
+      <End Role="period" EntitySet="periods" />
+      <End Role="generalTime" EntitySet="generalTimes" />
+    </AssociationSet>
+    <AssociationSet Name="productToOrderToOrder" Association="Self.productToOrderToOrder">
+      <End Role="orderAttraction" EntitySet="orderAttractions" />
+      <End Role="productToOrder" EntitySet="productToOrders" />
+    </AssociationSet>
+    <EntitySet Name="equipments" EntityType="discoverIsraelModel.equipment" />
+    <EntitySet Name="images" EntityType="discoverIsraelModel.image" />
+    <EntitySet Name="opinions" EntityType="discoverIsraelModel.opinion" />
+    <EntitySet Name="users" EntityType="discoverIsraelModel.user" />
+    <AssociationSet Name="opinionToUser" Association="discoverIsraelModel.opinionToUser">
+      <End Role="user" EntitySet="users" />
+      <End Role="opinion" EntitySet="opinions" />
+    </AssociationSet>
+    <AssociationSet Name="orderToUser" Association="discoverIsraelModel.orderToUser">
+      <End Role="user" EntitySet="users" />
+      <End Role="orderAttraction" EntitySet="orderAttractions" />
+    </AssociationSet>
+    <EntitySet Name="Areas" EntityType="discoverIsraelModel.Area" />
+    <EntitySet Name="attractions" EntityType="discoverIsraelModel.attraction" />
+    <EntitySet Name="wishes" EntityType="discoverIsraelModel.wish" />
+    <AssociationSet Name="FK_attraction_Area" Association="discoverIsraelModel.FK_attraction_Area">
+      <End Role="Area" EntitySet="Areas" />
+      <End Role="attraction" EntitySet="attractions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__attractio__Categ__34C8D9D1" Association="discoverIsraelModel.FK__attractio__Categ__34C8D9D1">
+      <End Role="category" EntitySet="categories" />
+      <End Role="attraction" EntitySet="attractions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__attractio__Manag__35BCFE0A" Association="discoverIsraelModel.FK__attractio__Manag__35BCFE0A">
+      <End Role="user" EntitySet="users" />
+      <End Role="attraction" EntitySet="attractions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__equipment__Attra__38996AB5" Association="discoverIsraelModel.FK__equipment__Attra__38996AB5">
+      <End Role="attraction" EntitySet="attractions" />
+      <End Role="equipment" EntitySet="equipments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Image_attraction" Association="discoverIsraelModel.FK_Image_attraction">
+      <End Role="attraction" EntitySet="attractions" />
+      <End Role="image" EntitySet="images" />
+    </AssociationSet>
+    <AssociationSet Name="FK_wish_attraction1" Association="discoverIsraelModel.FK_wish_attraction1">
+      <End Role="attraction" EntitySet="attractions" />
+      <End Role="wish" EntitySet="wishes" />
+    </AssociationSet>
+    <AssociationSet Name="generalTimeToAttraction" Association="discoverIsraelModel.generalTimeToAttraction">
+      <End Role="attraction" EntitySet="attractions" />
+      <End Role="generalTime" EntitySet="generalTimes" />
+    </AssociationSet>
+    <AssociationSet Name="opinionToAttraction" Association="discoverIsraelModel.opinionToAttraction">
+      <End Role="attraction" EntitySet="attractions" />
+      <End Role="opinion" EntitySet="opinions" />
+    </AssociationSet>
+    <AssociationSet Name="productToOrderToAttraction" Association="discoverIsraelModel.productToOrderToAttraction">
+      <End Role="attraction" EntitySet="attractions" />
+      <End Role="productToOrder" EntitySet="productToOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Wish_users" Association="discoverIsraelModel.FK_Wish_users">
+      <End Role="user" EntitySet="users" />
+      <End Role="wish" EntitySet="wishes" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="equipment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AttractionId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="attraction" Relationship="discoverIsraelModel.FK__equipment__Attra__38996AB5" FromRole="equipment" ToRole="attraction" />
+  </EntityType>
+  <EntityType Name="image">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Img" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="AttractionId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="attraction" Relationship="discoverIsraelModel.FK_Image_attraction" FromRole="image" ToRole="attraction" />
+  </EntityType>
+  <EntityType Name="opinion">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OpinionText" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="true" />
+    <Property Name="AttractionId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Grading" Type="Double" Nullable="false" />
+    <NavigationProperty Name="user" Relationship="discoverIsraelModel.opinionToUser" FromRole="opinion" ToRole="user" />
+    <NavigationProperty Name="attraction" Relationship="discoverIsraelModel.opinionToAttraction" FromRole="opinion" ToRole="attraction" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+    <NavigationProperty Name="opinions" Relationship="discoverIsraelModel.opinionToUser" FromRole="user" ToRole="opinion" />
+    <NavigationProperty Name="orderAttractions" Relationship="discoverIsraelModel.orderToUser" FromRole="user" ToRole="orderAttraction" />
+    <NavigationProperty Name="attractions" Relationship="discoverIsraelModel.FK__attractio__Manag__35BCFE0A" FromRole="user" ToRole="attraction" />
+    <NavigationProperty Name="wishes" Relationship="discoverIsraelModel.FK_Wish_users" FromRole="user" ToRole="wish" />
+  </EntityType>
+  <Association Name="opinionToUser">
+    <End Type="discoverIsraelModel.user" Role="user" Multiplicity="1" />
+    <End Type="discoverIsraelModel.opinion" Role="opinion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="opinion">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="orderToUser">
+    <End Type="discoverIsraelModel.user" Role="user" Multiplicity="1" />
+    <End Type="discoverIsraelModel.orderAttraction" Role="orderAttraction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="orderAttraction">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Area">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Area1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="attractions" Relationship="discoverIsraelModel.FK_attraction_Area" FromRole="Area" ToRole="attraction" />
+  </EntityType>
+  <EntityType Name="attraction">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ManagerId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="MinParticipant" Type="Int32" Nullable="false" />
+    <Property Name="MaxParticipant" Type="Int32" Nullable="false" />
+    <Property Name="IsAvailable" Type="Boolean" />
+    <Property Name="FromAge" Type="Int32" Nullable="false" />
+    <Property Name="TillAge" Type="Int32" Nullable="false" />
+    <Property Name="status" Type="Boolean" />
+    <Property Name="DaysToCancel" Type="Int32" Nullable="false" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CategoryId" Type="Int32" Nullable="false" />
+    <Property Name="TimeDuration" Type="Int32" />
+    <Property Name="AreaId" Type="Int32" />
+    <NavigationProperty Name="Area" Relationship="discoverIsraelModel.FK_attraction_Area" FromRole="attraction" ToRole="Area" />
+    <NavigationProperty Name="category" Relationship="discoverIsraelModel.FK__attractio__Categ__34C8D9D1" FromRole="attraction" ToRole="category" />
+    <NavigationProperty Name="user" Relationship="discoverIsraelModel.FK__attractio__Manag__35BCFE0A" FromRole="attraction" ToRole="user" />
+    <NavigationProperty Name="equipments" Relationship="discoverIsraelModel.FK__equipment__Attra__38996AB5" FromRole="attraction" ToRole="equipment" />
+    <NavigationProperty Name="images" Relationship="discoverIsraelModel.FK_Image_attraction" FromRole="attraction" ToRole="image" />
+    <NavigationProperty Name="wishes" Relationship="discoverIsraelModel.FK_wish_attraction1" FromRole="attraction" ToRole="wish" />
+    <NavigationProperty Name="generalTimes" Relationship="discoverIsraelModel.generalTimeToAttraction" FromRole="attraction" ToRole="generalTime" />
+    <NavigationProperty Name="opinions" Relationship="discoverIsraelModel.opinionToAttraction" FromRole="attraction" ToRole="opinion" />
+    <NavigationProperty Name="productToOrders" Relationship="discoverIsraelModel.productToOrderToAttraction" FromRole="attraction" ToRole="productToOrder" />
+  </EntityType>
+  <EntityType Name="wish">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AttractionId" Type="Int32" />
+    <Property Name="UserId" Type="Int32" />
+    <NavigationProperty Name="attraction" Relationship="discoverIsraelModel.FK_wish_attraction1" FromRole="wish" ToRole="attraction" />
+    <NavigationProperty Name="user" Relationship="discoverIsraelModel.FK_Wish_users" FromRole="wish" ToRole="user" />
+  </EntityType>
+  <Association Name="FK_attraction_Area">
+    <End Type="discoverIsraelModel.Area" Role="Area" Multiplicity="0..1" />
+    <End Type="discoverIsraelModel.attraction" Role="attraction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Area">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="attraction">
+        <PropertyRef Name="AreaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__attractio__Categ__34C8D9D1">
+    <End Type="discoverIsraelModel.category" Role="category" Multiplicity="1" />
+    <End Type="discoverIsraelModel.attraction" Role="attraction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="attraction">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__attractio__Manag__35BCFE0A">
+    <End Type="discoverIsraelModel.user" Role="user" Multiplicity="1" />
+    <End Type="discoverIsraelModel.attraction" Role="attraction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="attraction">
+        <PropertyRef Name="ManagerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__equipment__Attra__38996AB5">
+    <End Type="discoverIsraelModel.attraction" Role="attraction" Multiplicity="1" />
+    <End Type="discoverIsraelModel.equipment" Role="equipment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="attraction">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="equipment">
+        <PropertyRef Name="AttractionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Image_attraction">
+    <End Type="discoverIsraelModel.attraction" Role="attraction" Multiplicity="1" />
+    <End Type="discoverIsraelModel.image" Role="image" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="attraction">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="image">
+        <PropertyRef Name="AttractionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_wish_attraction1">
+    <End Type="discoverIsraelModel.attraction" Role="attraction" Multiplicity="0..1" />
+    <End Type="discoverIsraelModel.wish" Role="wish" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="attraction">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="wish">
+        <PropertyRef Name="AttractionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="generalTimeToAttraction">
+    <End Type="discoverIsraelModel.attraction" Role="attraction" Multiplicity="1" />
+    <End Type="discoverIsraelModel.generalTime" Role="generalTime" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="attraction">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="generalTime">
+        <PropertyRef Name="AttractionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="opinionToAttraction">
+    <End Type="discoverIsraelModel.attraction" Role="attraction" Multiplicity="1" />
+    <End Type="discoverIsraelModel.opinion" Role="opinion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="attraction">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="opinion">
+        <PropertyRef Name="AttractionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="productToOrderToAttraction">
+    <End Type="discoverIsraelModel.attraction" Role="attraction" Multiplicity="1" />
+    <End Type="discoverIsraelModel.productToOrder" Role="productToOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="attraction">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="productToOrder">
+        <PropertyRef Name="AttractionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Wish_users">
+    <End Type="discoverIsraelModel.user" Role="user" Multiplicity="0..1" />
+    <End Type="discoverIsraelModel.wish" Role="wish" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="wish">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

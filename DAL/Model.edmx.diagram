@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bd02ce1fd2b547288b0629ac727c8a9f" Name="Diagram1">
+        <EntityTypeShape EntityType="coronaModel.City" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="coronaModel.CoronaPatient" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="coronaModel.Country" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="coronaModel.VaccineManufacturer" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <AssociationConnector Association="coronaModel.FK_VaccineManufacturer_Country1" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="coronaModel.Vaccination" Width="1.5" PointX="5.25" PointY="7.125" />
+        <AssociationConnector Association="coronaModel.FK_Vaccination_VaccineManufacturer1" />
+        <EntityTypeShape EntityType="coronaModel.Member" Width="1.5" PointX="3" PointY="3" />
+        <AssociationConnector Association="coronaModel.FK_User_City1" />
+        <AssociationConnector Association="coronaModel.FK_Disease_User1" />
+        <AssociationConnector Association="coronaModel.FK_Vaccination_User1" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

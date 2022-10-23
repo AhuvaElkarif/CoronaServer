@@ -1,0 +1,36 @@
+U:\ו6\אהובה אלקריף\Server\server\DTO\bin\Debug\DTO.dll
+U:\ו6\אהובה אלקריף\Server\server\DTO\bin\Debug\DTO.pdb
+U:\ו6\אהובה אלקריף\Server\server\DTO\bin\Debug\DAL.dll
+U:\ו6\אהובה אלקריף\Server\server\DTO\bin\Debug\EntityFramework.dll
+U:\ו6\אהובה אלקריף\Server\server\DTO\bin\Debug\DAL.pdb
+U:\ו6\אהובה אלקריף\Server\server\DTO\bin\Debug\DAL.dll.config
+U:\ו6\אהובה אלקריף\Server\server\DTO\bin\Debug\EntityFramework.xml
+U:\ו6\אהובה אלקריף\Server\server\DTO\obj\Debug\DTO.csprojAssemblyReference.cache
+U:\ו6\אהובה אלקריף\Server\server\DTO\obj\Debug\DTO.csproj.CoreCompileInputs.cache
+U:\ו6\אהובה אלקריף\Server\server\DTO\obj\Debug\DTO.csproj.CopyComplete
+U:\ו6\אהובה אלקריף\Server\server\DTO\obj\Debug\DTO.dll
+U:\ו6\אהובה אלקריף\Server\server\DTO\obj\Debug\DTO.pdb
+C:\Users\User\Desktop\Server\server\DTO\bin\Debug\DTO.dll
+C:\Users\User\Desktop\Server\server\DTO\bin\Debug\DTO.pdb
+C:\Users\User\Desktop\Server\server\DTO\bin\Debug\DAL.dll
+C:\Users\User\Desktop\Server\server\DTO\bin\Debug\EntityFramework.dll
+C:\Users\User\Desktop\Server\server\DTO\bin\Debug\DAL.pdb
+C:\Users\User\Desktop\Server\server\DTO\bin\Debug\DAL.dll.config
+C:\Users\User\Desktop\Server\server\DTO\bin\Debug\EntityFramework.xml
+C:\Users\User\Desktop\Server\server\DTO\obj\Debug\DTO.csproj.AssemblyReference.cache
+C:\Users\User\Desktop\Server\server\DTO\obj\Debug\DTO.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\Server\server\DTO\obj\Debug\DTO.csproj.CopyComplete
+C:\Users\User\Desktop\Server\server\DTO\obj\Debug\DTO.dll
+C:\Users\User\Desktop\Server\server\DTO\obj\Debug\DTO.pdb
+C:\Users\User\Documents\GitHub\CoronaServer\DTO\bin\Debug\DTO.dll
+C:\Users\User\Documents\GitHub\CoronaServer\DTO\bin\Debug\DTO.pdb
+C:\Users\User\Documents\GitHub\CoronaServer\DTO\bin\Debug\DAL.dll
+C:\Users\User\Documents\GitHub\CoronaServer\DTO\bin\Debug\EntityFramework.dll
+C:\Users\User\Documents\GitHub\CoronaServer\DTO\bin\Debug\DAL.pdb
+C:\Users\User\Documents\GitHub\CoronaServer\DTO\bin\Debug\DAL.dll.config
+C:\Users\User\Documents\GitHub\CoronaServer\DTO\bin\Debug\EntityFramework.xml
+C:\Users\User\Documents\GitHub\CoronaServer\DTO\obj\Debug\DTO.csproj.AssemblyReference.cache
+C:\Users\User\Documents\GitHub\CoronaServer\DTO\obj\Debug\DTO.csproj.CoreCompileInputs.cache
+C:\Users\User\Documents\GitHub\CoronaServer\DTO\obj\Debug\DTO.csproj.CopyComplete
+C:\Users\User\Documents\GitHub\CoronaServer\DTO\obj\Debug\DTO.dll
+C:\Users\User\Documents\GitHub\CoronaServer\DTO\obj\Debug\DTO.pdb

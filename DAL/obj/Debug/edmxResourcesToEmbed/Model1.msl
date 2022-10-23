@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="discoverIsraelModelStoreContainer" CdmEntityContainer="discoverIsraelEntities">
+    <EntitySetMapping Name="categories">
+      <EntityTypeMapping TypeName="discoverIsraelModel.category">
+        <MappingFragment StoreEntitySet="category">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="generalTimes">
+      <EntityTypeMapping TypeName="discoverIsraelModel.generalTime">
+        <MappingFragment StoreEntitySet="generalTime">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AttractionId" ColumnName="AttractionId" />
+          <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="DayInWeek" ColumnName="DayInWeek" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="orderAttractions">
+      <EntityTypeMapping TypeName="discoverIsraelModel.orderAttraction">
+        <MappingFragment StoreEntitySet="orderAttraction">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="GlobalPrice" ColumnName="GlobalPrice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="periods">
+      <EntityTypeMapping TypeName="discoverIsraelModel.period">
+        <MappingFragment StoreEntitySet="period">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Season" ColumnName="Season" />
+          <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+          <ScalarProperty Name="TillDate" ColumnName="TillDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="productToOrders">
+      <EntityTypeMapping TypeName="discoverIsraelModel.productToOrder">
+        <MappingFragment StoreEntitySet="productToOrder">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="OrderAttractionId" ColumnName="OrderAttractionId" />
+          <ScalarProperty Name="AttractionId" ColumnName="AttractionId" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="FromHour" ColumnName="FromHour" />
+          <ScalarProperty Name="TillHour" ColumnName="TillHour" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="equipments">
+      <EntityTypeMapping TypeName="discoverIsraelModel.equipment">
+        <MappingFragment StoreEntitySet="equipment">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="AttractionId" ColumnName="AttractionId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="images">
+      <EntityTypeMapping TypeName="discoverIsraelModel.image">
+        <MappingFragment StoreEntitySet="image">
+          <ScalarProperty Name="AttractionId" ColumnName="AttractionId" />
+          <ScalarProperty Name="Img" ColumnName="Img" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="opinions">
+      <EntityTypeMapping TypeName="discoverIsraelModel.opinion">
+        <MappingFragment StoreEntitySet="opinion">
+          <ScalarProperty Name="Grading" ColumnName="Grading" />
+          <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="AttractionId" ColumnName="AttractionId" />
+          <ScalarProperty Name="OpinionText" ColumnName="OpinionText" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="discoverIsraelModel.user">
+        <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Areas">
+      <EntityTypeMapping TypeName="discoverIsraelModel.Area">
+        <MappingFragment StoreEntitySet="Area">
+          <ScalarProperty Name="Area1" ColumnName="Area" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="attractions">
+      <EntityTypeMapping TypeName="discoverIsraelModel.attraction">
+        <MappingFragment StoreEntitySet="attraction">
+          <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+          <ScalarProperty Name="TimeDuration" ColumnName="TimeDuration" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="DaysToCancel" ColumnName="DaysToCancel" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="TillAge" ColumnName="TillAge" />
+          <ScalarProperty Name="FromAge" ColumnName="FromAge" />
+          <ScalarProperty Name="IsAvailable" ColumnName="IsAvailable" />
+          <ScalarProperty Name="MaxParticipant" ColumnName="MaxParticipant" />
+          <ScalarProperty Name="MinParticipant" ColumnName="MinParticipant" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="wishes">
+      <EntityTypeMapping TypeName="discoverIsraelModel.wish">
+        <MappingFragment StoreEntitySet="wish">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="AttractionId" ColumnName="AttractionId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
